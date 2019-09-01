@@ -87,8 +87,8 @@ async def locks(event):
             await event.edit(f"`Locked {what} for this chat !!`")
             await sleep(3)
             await event.delete()
-        except BaseException:
-            await event.edit("`Do I have proper rights for that ??`")
+        except BaseException as e:
+            await event.edit(f"`Do I have proper rights for that ??`\n{str(e)}")
 
 
 @register(outgoing=True, pattern=r"^.unlock ?(.*)")
@@ -172,8 +172,8 @@ async def rem_locks(event):
             await event.edit(f"`Unlocked {what} for this chat !!`")
             await sleep(3)
             await event.delete()
-        except BaseException:
-            await event.edit("`Do I have proper rights for that ??`")
+        except BaseException as e:
+            await event.edit(f"`Do I have proper rights for that ??`\n{str(e)}")
 
 
 CMD_HELP.update({
