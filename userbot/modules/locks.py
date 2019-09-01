@@ -1,4 +1,4 @@
-from telethon.functions.messages import EditChatDefaultBannedRightsRequest
+from telethon.tl.functions.messages import EditChatDefaultBannedRightsRequest
 from telethon.tl.types import ChatBannedRights
 
 from asyncio import sleep
@@ -12,7 +12,6 @@ async def locks(event):
     if not event.text[0].isalpha() and event.text[0] not in ("/", "#", "@",
                                                              "!"):
         input_str = event.pattern_match.group(1)
-        peer_id = event.chat_id
         msg = None
         media = None
         sticker = None
@@ -96,7 +95,6 @@ async def rem_locks(event):
     if not event.text[0].isalpha() and event.text[0] not in ("/", "#", "@",
                                                              "!"):
         input_str = event.pattern_match.group(1)
-        
         msg = None
         media = None
         sticker = None
