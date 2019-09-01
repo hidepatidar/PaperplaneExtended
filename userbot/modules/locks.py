@@ -1,5 +1,4 @@
-from telethon.tl.functions.messages import EditChatDefaultBannedRightsRequest
-from telethon.tl.types import ChatBannedRights
+from telethon import functions, types
 
 from asyncio import sleep
 from userbot import bot, CMD_HELP
@@ -65,7 +64,7 @@ async def locks(event):
             changeinfo = True
             what = "everything"
 
-        lock_rights = ChatBannedRights(
+        lock_rights = types.ChatBannedRights(
             until_date=None,
             send_messages=msg,
             send_media=media,
@@ -80,8 +79,8 @@ async def locks(event):
         )
         try:
             await bot(
-                EditChatDefaultBannedRightsRequest(peer=event.chat_id,
-                                                   banned_rights=lock_rights))
+                functions.messages.EditChatDefaultBannedRightsRequest(peer=event.chat_id,
+                                                                      banned_rights=lock_rights))
             await event.edit(f"`Locked {what} for this chat !!`")
             await sleep(3)
             await event.delete()
@@ -148,7 +147,7 @@ async def rem_locks(event):
             changeinfo = False
             what = "everything"
 
-        unlock_rights = ChatBannedRights(
+        unlock_rights = types.ChatBannedRights(
             until_date=None,
             send_messages=msg,
             send_media=media,
@@ -163,8 +162,8 @@ async def rem_locks(event):
         )
         try:
             await bot(
-                EditChatDefaultBannedRightsRequest(peer=event.chat_id,
-                                                   banned_rights=unlock_rights)
+                functions.messages.EditChatDefaultBannedRightsRequest(peer=event.chat_id,
+                                                                      banned_rights=unlock_rights)
             )
             await event.edit(f"`Unlocked {what} for this chat !!`")
             await sleep(3)
