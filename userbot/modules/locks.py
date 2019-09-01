@@ -1,9 +1,8 @@
-from telethon.tl.functions.channels import EditBannedRequest
-from telethon.tl.functions.messages import EditChatDefaultBannedRightsRequest
+from telethon.functions.messages import EditChatDefaultBannedRightsRequest
 from telethon.tl.types import ChatBannedRights
 
 from asyncio import sleep
-from userbot import CMD_HELP
+from userbot import bot, CMD_HELP
 from userbot.events import register, errors_handler
 
 
@@ -81,8 +80,8 @@ async def locks(event):
             change_info=changeinfo,
         )
         try:
-            await event.client(
-                EditChatDefaultBannedRightsRequest(peer=peer_id,
+            await bot(
+                EditChatDefaultBannedRightsRequest(peer=event.chat_id,
                                                    banned_rights=lock_rights))
             await event.edit(f"`Locked {what} for this chat !!`")
             await sleep(3)
@@ -97,7 +96,7 @@ async def rem_locks(event):
     if not event.text[0].isalpha() and event.text[0] not in ("/", "#", "@",
                                                              "!"):
         input_str = event.pattern_match.group(1)
-        peer_id = event.chat_id
+        
         msg = None
         media = None
         sticker = None
@@ -165,8 +164,8 @@ async def rem_locks(event):
             change_info=changeinfo,
         )
         try:
-            await event.client(
-                EditChatDefaultBannedRightsRequest(peer=peer_id,
+            await bot(
+                EditChatDefaultBannedRightsRequest(peer=event.chat_id,
                                                    banned_rights=unlock_rights)
             )
             await event.edit(f"`Unlocked {what} for this chat !!`")
