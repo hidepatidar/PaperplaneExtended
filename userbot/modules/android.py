@@ -10,7 +10,7 @@ from requests import get
 from bs4 import BeautifulSoup
 
 from userbot import CMD_HELP
-from userbot.events import register, errors_handler
+from userbot.events import register
 
 GITHUB = 'https://github.com'
 DEVICES_DATA = 'https://raw.githubusercontent.com/androidtrackers/' \
@@ -18,7 +18,6 @@ DEVICES_DATA = 'https://raw.githubusercontent.com/androidtrackers/' \
 
 
 @register(outgoing=True, pattern="^.magisk$")
-@errors_handler
 async def magisk(request):
     """ magisk latest releases """
     if not request.text[0].isalpha() and request.text[0] not in ("/", "#", "@",
@@ -35,7 +34,6 @@ async def magisk(request):
 
 
 @register(outgoing=True, pattern=r"^.device(?: |$)(\S*)")
-@errors_handler
 async def device_info(request):
     """ get android device basic info from its codename """
     if not request.text[0].isalpha()\
@@ -69,7 +67,6 @@ async def device_info(request):
 
 
 @register(outgoing=True, pattern=r"^.codename(?: |)([\S]*)(?: |)([\s\S]*)")
-@errors_handler
 async def codename_info(request):
     """ search for android codename """
     if not request.text[0].isalpha()\
@@ -107,7 +104,6 @@ async def codename_info(request):
 
 
 @register(outgoing=True, pattern=r"^.specs(?: |)([\S]*)(?: |)([\s\S]*)")
-@errors_handler
 async def devices_specifications(request):
     """ Mobile devices specifications """
     if not request.text[0].isalpha() and request.text[0] not in ("/", "#", "@",
@@ -164,7 +160,6 @@ async def devices_specifications(request):
 
 
 @register(outgoing=True, pattern=r"^.twrp(?: |$)(\S*)")
-@errors_handler
 async def twrp(request):
     """ get android device twrp """
     if not request.text[0].isalpha()\

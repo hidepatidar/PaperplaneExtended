@@ -4,11 +4,10 @@ from telethon.tl.types import ChatBannedRights
 
 from asyncio import sleep
 from userbot import CMD_HELP
-from userbot.events import register, errors_handler
+from userbot.events import register
 
 
 @register(outgoing=True, pattern=r"^.lock ?(.*)")
-@errors_handler
 async def locks(event):
     if not event.text[0].isalpha() and event.text[0] not in ("/", "#", "@",
                                                              "!"):
@@ -92,7 +91,6 @@ async def locks(event):
 
 
 @register(outgoing=True, pattern=r"^.unlock ?(.*)")
-@errors_handler
 async def rem_locks(event):
     if not event.text[0].isalpha() and event.text[0] not in ("/", "#", "@",
                                                              "!"):

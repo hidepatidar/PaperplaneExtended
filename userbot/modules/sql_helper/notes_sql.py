@@ -15,14 +15,7 @@ class Notes(BASE):
     media_access_hash = Column(UnicodeText)
     media_file_reference = Column(LargeBinary)
 
-    def __init__(self,
-                 chat_id,
-                 keyword,
-                 reply,
-                 snip_type,
-                 media_id=None,
-                 media_access_hash=None,
-                 media_file_reference=None):
+    def __init__(self, chat_id, keyword, reply, snip_type, media_id=None, media_access_hash=None, media_file_reference=None):
         self.chat_id = str(chat_id)  # ensure string
         self.keyword = keyword
         self.reply = reply
@@ -49,12 +42,10 @@ def get_notes(chat_id):
         SESSION.close()
 
 
-def add_note(chat_id, keyword, reply, snip_type, media_id, media_access_hash,
-             media_file_reference):
+def add_note(chat_id, keyword, reply, snip_type, media_id, media_access_hash, media_file_reference):
     to_check = get_note(chat_id, keyword)
     if not to_check:
-        adder = Notes(str(chat_id), keyword, reply, snip_type, media_id,
-                      media_access_hash, media_file_reference)
+        adder = Notes(str(chat_id), keyword, reply, snip_type, media_id,media_access_hash, media_file_reference)
         SESSION.add(adder)
         SESSION.commit()
         return True
@@ -62,12 +53,10 @@ def add_note(chat_id, keyword, reply, snip_type, media_id, media_access_hash,
         rem = SESSION.query(Notes).get((str(chat_id), keyword))
         SESSION.delete(rem)
         SESSION.commit()
-        adder = Notes(str(chat_id), keyword, reply, snip_type, media_id,
-                      media_access_hash, media_file_reference)
+        adder = Notes(str(chat_id), keyword, reply, snip_type, media_id,media_access_hash, media_file_reference)
         SESSION.add(adder)
         SESSION.commit()
         return False
-
 
 def rm_note(chat_id, keyword):
     to_check = get_note(chat_id, keyword)
@@ -78,7 +67,6 @@ def rm_note(chat_id, keyword):
         SESSION.delete(rem)
         SESSION.commit()
         return True
-
 
 def rm_all_notes(chat_id):
     notes = SESSION.query(Notes).filter(Notes.chat_id == str(chat_id))

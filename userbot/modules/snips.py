@@ -7,7 +7,7 @@
 
 from telethon import utils
 from telethon.tl import types
-from userbot.events import register, errors_handler
+from userbot.events import register
 from userbot import CMD_HELP
 
 TYPE_TEXT = 0
@@ -15,8 +15,7 @@ TYPE_PHOTO = 1
 TYPE_DOCUMENT = 2
 
 
-@register(outgoing=True, pattern=r"\$\w*")
-@errors_handler
+@register(outgoing=True, pattern=r"\₹\w*")
 async def on_snip(event):
     """ Snips logic. """
     try:
@@ -50,7 +49,6 @@ async def on_snip(event):
 
 
 @register(outgoing=True, pattern="^.snip (.*)")
-@errors_handler
 async def on_snip_save(event):
     """ For .snip command, saves snips for future use. """
     try:
@@ -78,7 +76,7 @@ async def on_snip_save(event):
                 snip['hash'] = media.access_hash
                 snip['fr'] = media.file_reference
 
-        success = "`Snip {} successfully. Use` **${}** `anywhere to get it`"
+        success = "`Snip {} successfully. Use` **₹{}** `anywhere to get it`"
 
         if add_snip(name, snip['text'], snip['type'], snip.get('id'),
                     snip.get('hash'), snip.get('fr')) is False:
@@ -88,7 +86,6 @@ async def on_snip_save(event):
 
 
 @register(outgoing=True, pattern="^.snips$")
-@errors_handler
 async def on_snip_list(event):
     """ For .snips command, lists snips saved by you. """
     if not event.text[0].isalpha() and event.text[0] not in ("/", "#", "@",
@@ -104,15 +101,14 @@ async def on_snip_list(event):
         for a_snip in all_snips:
             if message == "`No snips available right now.`":
                 message = "Available snips:\n"
-                message += f"- `${a_snip.snip}`\n"
+                message += f"- `₹{a_snip.snip}`\n"
             else:
-                message += f"- `${a_snip.snip}`\n"
+                message += f"- `₹{a_snip.snip}`\n"
 
         await event.edit(message)
 
 
 @register(outgoing=True, pattern="^.remsnip (.*)")
-@errors_handler
 async def on_snip_delete(event):
     """ For .remsnip command, deletes a snip. """
     try:
@@ -130,7 +126,7 @@ async def on_snip_delete(event):
 CMD_HELP.update({
     "snips":
     "\
-$<snip_name>\
+₹<snip_name>\
 \nUsage: Gets the specified snip.\
 \n\n.snip <name>\
 \nUsage: Saves the replied message as a snip with the name. (Works with pics, docs, and stickers too!)\

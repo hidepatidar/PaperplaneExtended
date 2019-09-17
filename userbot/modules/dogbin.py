@@ -1,6 +1,6 @@
 # Copyright (C) 2019 The Raphielscape Company LLC.
 #
-# Licensed under the Raphielscape Public License, Version 1.c (the "License");
+# Licensed under the Raphielscape Public License, Version 1.b (the "License");
 # you may not use this file except in compliance with the License.
 #
 """ Userbot module containing commands for interacting with dogbin(https://del.dog)"""
@@ -9,22 +9,20 @@ from requests import get, post, exceptions
 import asyncio
 import os
 from userbot import BOTLOG, BOTLOG_CHATID, CMD_HELP, LOGS, TEMP_DOWNLOAD_DIRECTORY
-from userbot.events import register, errors_handler
+from userbot.events import register
 
 DOGBIN_URL = "https://del.dog/"
 
-
 @register(outgoing=True, pattern=r"^.paste(?: |$)([\s\S]*)")
-@errors_handler
 async def paste(pstl):
-    """ For .paste command, pastes the text directly to dogbin. """
+    """ For .paste command, allows using dogbin functionality with the command. """
     if not pstl.text[0].isalpha() and pstl.text[0] not in ("/", "#", "@", "!"):
         dogbin_final_url = ""
         match = pstl.pattern_match.group(1).strip()
         reply_id = pstl.reply_to_msg_id
 
         if not match and not reply_id:
-            await pstl.edit("Elon Musk said I cannot paste void.")
+            await pstl.edit("There's nothing to paste.")
             return
 
         if match:
@@ -41,7 +39,7 @@ async def paste(pstl):
                     m_list = fd.readlines()
                 message = ""
                 for m in m_list:
-                    message += m.decode("UTF-8") + "\r"
+                    message += m.decode("UTF-8") + "\r\n"
                 os.remove(downloaded_file_name)
             else:
                 message = message.message
@@ -56,30 +54,31 @@ async def paste(pstl):
             dogbin_final_url = DOGBIN_URL + key
 
             if response['isUrl']:
-                reply_text = ("`Pasted successfully!`\n\n"
-                              f"`Shortened URL:` {dogbin_final_url}\n\n"
-                              "`Original(non-shortened) URLs`\n"
-                              f"`Dogbin URL`: {DOGBIN_URL}v/{key}\n")
+                reply_text = (
+                    "`Pasted successfully!`\n\n"
+                    f"`Shortened URL:` {dogbin_final_url}\n\n"
+                    "`Original(non-shortened) URLs`\n"
+                    f"`Dogbin URL`: {DOGBIN_URL}v/{key}\n")
             else:
-                reply_text = ("`Pasted successfully!`\n\n"
-                              f"`Dogbin URL`: {dogbin_final_url}")
+                reply_text = (
+                    "`Pasted successfully!`\n\n"
+                    f"`Dogbin URL`: {dogbin_final_url}")
         else:
-            reply_text = ("`Failed to reach Dogbin`")
+            reply_text = (
+                "`Failed to reach Dogbin`")
 
         await pstl.edit(reply_text)
         if BOTLOG:
             await pstl.client.send_message(
                 BOTLOG_CHATID,
-                f"Paste query was executed successfully",
+                "Paste query `" + message + "` was executed successfully",
             )
 
 
 @register(outgoing=True, pattern="^.getpaste(?: |$)(.*)")
-@errors_handler
 async def get_dogbin_content(dog_url):
-    """ For .getpaste command, fetches the content of a dogbin URL. """
-    if not dog_url.text[0].isalpha() and dog_url.text[0] not in ("/", "#", "@",
-                                                                 "!"):
+    """ For .get_dogbin_content command, fetches the content of a dogbin URL. """
+    if not dog_url.text[0].isalpha() and dog_url.text[0] not in ("/", "#", "@", "!"):
         textx = await dog_url.get_reply_message()
         message = dog_url.pattern_match.group(1)
         await dog_url.edit("`Getting dogbin content . . .`")
@@ -97,7 +96,7 @@ async def get_dogbin_content(dog_url):
         elif message.startswith("del.dog/"):
             message = message[len("del.dog/"):]
         else:
-            await dog_url.edit("`Is that even a dogbin url?`")
+            await dog_url.edit("`Are you sure you're using a valid dogbin URL?`")
             return
 
         resp = get(f'{DOGBIN_URL}raw/{message}')
@@ -105,17 +104,13 @@ async def get_dogbin_content(dog_url):
         try:
             resp.raise_for_status()
         except exceptions.HTTPError as HTTPErr:
-            await dog_url.edit(
-                "Request returned an unsuccessful status code.\n\n" +
-                str(HTTPErr))
+            await dog_url.edit("Request returned an unsuccessful status code.\n\n" + str(HTTPErr))
             return
         except exceptions.Timeout as TimeoutErr:
-            await dog_url.edit("Request timed out." + str(TimeoutErr))
+            await dog_url.edit("Request timed out."+ str(TimeoutErr))
             return
         except exceptions.TooManyRedirects as RedirectsErr:
-            await dog_url.edit(
-                "Request exceeded the configured number of maximum redirections."
-                + str(RedirectsErr))
+            await dog_url.edit("Request exceeded the configured number of maximum redirections." + str(RedirectsErr))
             return
 
         reply_text = "`Fetched dogbin URL content successfully!`\n\n`Content:` " + resp.text
@@ -124,14 +119,12 @@ async def get_dogbin_content(dog_url):
         if BOTLOG:
             await dog_url.client.send_message(
                 BOTLOG_CHATID,
-                "Get dogbin content query was executed successfully",
+                "Get dogbin content query for `" + message + "` was executed successfully",
             )
 
-
 CMD_HELP.update({
-    "dogbin":
-    ".paste <text/reply>\
+    "dogbin": ".paste <text/reply>\
 \nUsage: Create a paste or a shortened url using dogbin (https://del.dog/)\
 \n\n.getpaste\
-\nUsage: Gets the content of a paste or shortened url from dogbin (https://del.dog/)"
+\nUsage: Get the content of a paste or shortened url from dogbin (https://del.dog/)"
 })

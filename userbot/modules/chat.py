@@ -8,11 +8,10 @@ from time import sleep
 
 from telethon.tl.functions.channels import LeaveChannelRequest
 from userbot import CMD_HELP, BOTLOG, BOTLOG_CHATID, bot
-from userbot.events import register, errors_handler
+from userbot.events import register
 
 
 @register(outgoing=True, pattern="^.userid$")
-@errors_handler
 async def useridgetter(target):
     """ For .userid command, returns the ID of the target user. """
     if not target.text[0].isalpha() and target.text[0] not in ("/", "#", "@",
@@ -37,7 +36,6 @@ async def useridgetter(target):
 
 
 @register(outgoing=True, pattern="^.chatid$")
-@errors_handler
 async def chatidgetter(chat):
     """ For .chatid, returns the ID of the chat you are in at that moment. """
     if not chat.text[0].isalpha() and chat.text[0] not in ("/", "#", "@", "!"):
@@ -45,7 +43,6 @@ async def chatidgetter(chat):
 
 
 @register(outgoing=True, pattern=r"^.log(?: |$)([\s\S]*)")
-@errors_handler
 async def log(log_text):
     """ For .log command, forwards a message or the command argument to the bot logs group """
     if not log_text.text[0].isalpha() and log_text.text[0] not in ("/", "#",
@@ -70,7 +67,6 @@ async def log(log_text):
 
 
 @register(outgoing=True, pattern="^.kickme$")
-@errors_handler
 async def kickme(leave):
     """ Basically it's .kickme command """
     if not leave.text[0].isalpha() and leave.text[0] not in ("/", "#", "@",
@@ -82,7 +78,6 @@ async def kickme(leave):
 
 
 @register(outgoing=True, pattern="^.unmutechat$")
-@errors_handler
 async def unmute_chat(unm_e):
     """ For .unmutechat command, unmute a muted chat. """
     if not unm_e.text[0].isalpha() and unm_e.text[0] not in ("/", "#", "@",
@@ -99,7 +94,6 @@ async def unmute_chat(unm_e):
 
 
 @register(outgoing=True, pattern="^.mutechat$")
-@errors_handler
 async def mute_chat(mute_e):
     """ For .mutechat command, mute any chat. """
     if not mute_e.text[0].isalpha() and mute_e.text[0] not in ("/", "#", "@",
@@ -121,7 +115,6 @@ async def mute_chat(mute_e):
 
 
 @register(incoming=True)
-@errors_handler
 async def keep_read(message):
     """ The mute logic. """
     try:

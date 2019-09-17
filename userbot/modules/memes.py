@@ -1,9 +1,10 @@
 # Copyright (C) 2019 The Raphielscape Company LLC.
 #
-# Licensed under the Raphielscape Public License, Version 1.c (the "License");
+# Licensed under the Raphielscape Public License, Version 1.b (the "License");
 # you may not use this file except in compliance with the License.
 #
 #
+
 """ Userbot module for having some fun with people. """
 
 import asyncio
@@ -20,8 +21,8 @@ from telethon.tl.types import MessageEntityMentionName
 
 from cowpy import cow
 
-from userbot import CMD_HELP
-from userbot.events import register, errors_handler
+from userbot import CMD_HELP, ZALG_LIST
+from userbot.events import register
 
 # ================= CONSTANT =================
 METOOSTR = [
@@ -33,120 +34,6 @@ METOOSTR = [
     "Haha yes",
     "Me rn",
 ]
-
-ZALG_LIST = [[
-    "̖",
-    " ̗",
-    " ̘",
-    " ̙",
-    " ̜",
-    " ̝",
-    " ̞",
-    " ̟",
-    " ̠",
-    " ̤",
-    " ̥",
-    " ̦",
-    " ̩",
-    " ̪",
-    " ̫",
-    " ̬",
-    " ̭",
-    " ̮",
-    " ̯",
-    " ̰",
-    " ̱",
-    " ̲",
-    " ̳",
-    " ̹",
-    " ̺",
-    " ̻",
-    " ̼",
-    " ͅ",
-    " ͇",
-    " ͈",
-    " ͉",
-    " ͍",
-    " ͎",
-    " ͓",
-    " ͔",
-    " ͕",
-    " ͖",
-    " ͙",
-    " ͚",
-    " ",
-],
-             [
-                 " ̍",
-                 " ̎",
-                 " ̄",
-                 " ̅",
-                 " ̿",
-                 " ̑",
-                 " ̆",
-                 " ̐",
-                 " ͒",
-                 " ͗",
-                 " ͑",
-                 " ̇",
-                 " ̈",
-                 " ̊",
-                 " ͂",
-                 " ̓",
-                 " ̈́",
-                 " ͊",
-                 " ͋",
-                 " ͌",
-                 " ̃",
-                 " ̂",
-                 " ̌",
-                 " ͐",
-                 " ́",
-                 " ̋",
-                 " ̏",
-                 " ̽",
-                 " ̉",
-                 " ͣ",
-                 " ͤ",
-                 " ͥ",
-                 " ͦ",
-                 " ͧ",
-                 " ͨ",
-                 " ͩ",
-                 " ͪ",
-                 " ͫ",
-                 " ͬ",
-                 " ͭ",
-                 " ͮ",
-                 " ͯ",
-                 " ̾",
-                 " ͛",
-                 " ͆",
-                 " ̚",
-             ],
-             [
-                 " ̕",
-                 " ̛",
-                 " ̀",
-                 " ́",
-                 " ͘",
-                 " ̡",
-                 " ̢",
-                 " ̧",
-                 " ̨",
-                 " ̴",
-                 " ̵",
-                 " ̶",
-                 " ͜",
-                 " ͝",
-                 " ͞",
-                 " ͟",
-                 " ͠",
-                 " ͢",
-                 " ̸",
-                 " ̷",
-                 " ͡",
-             ]]
 
 EMOJIS = [
     "😂",
@@ -182,66 +69,33 @@ EMOJIS = [
 INSULT_STRINGS = [
     "Owww ... Such a stupid idiot.",
     "Don't drink and type.",
-    "I think you should go home or better a mental asylum.",
     "Command not found. Just like your brain.",
-    "Do you realize you are making a fool of yourself? Apparently not.",
-    "You can type better than that.",
     "Bot rule 544 section 9 prevents me from replying to stupid humans like you.",
     "Sorry, we do not sell brains.",
     "Believe me you are not normal.",
     "I bet your brain feels as good as new, seeing that you never use it.",
     "If I wanted to kill myself I'd climb your ego and jump to your IQ.",
-    "Zombies eat brains... you're safe.",
     "You didn't evolve from apes, they evolved from you.",
-    "Come back and talk to me when your I.Q. exceeds your age.",
-    "I'm not saying you're stupid, I'm just saying you've got bad luck when it comes to thinking.",
     "What language are you speaking? Cause it sounds like bullshit.",
-    "Stupidity is not a crime so you are free to go.",
     "You are proof that evolution CAN go in reverse.",
     "I would ask you how old you are but I know you can't count that high.",
     "As an outsider, what do you think of the human race?",
-    "Brains aren't everything. In your case they're nothing.",
     "Ordinarily people live and learn. You just live.",
-    "I don't know what makes you so stupid, but it really works.",
-    "Keep talking, someday you'll say something intelligent! (I doubt it though)",
-    "Shock me, say something intelligent.",
-    "Your IQ's lower than your shoe size.",
-    "Alas! Your neurotransmitters are no more working.",
-    "Are you crazy you fool.",
+    "Keep talking, someday you'll say something intelligent!.......(I doubt it though)",
     "Everyone has the right to be stupid but you are abusing the privilege.",
     "I'm sorry I hurt your feelings when I called you stupid. I thought you already knew that.",
     "You should try tasting cyanide.",
-    "Your enzymes are meant to digest rat poison.",
     "You should try sleeping forever.",
     "Pick up a gun and shoot yourself.",
-    "You could make a world record by jumping from a plane without parachute.",
-    "Stop talking BS and jump in front of a running bullet train.",
     "Try bathing with Hydrochloric Acid instead of water.",
-    "Try this: if you hold your breath underwater for an hour, you can then hold it forever.",
     "Go Green! Stop inhaling Oxygen.",
     "God was searching for you. You should leave to meet him.",
-    "give your 100%. Now, go donate blood.",
-    "Try jumping from a hundred story building but you can do it only once.",
-    "You should donate your brain seeing that you never used it.",
-    "Volunteer for target in an firing range.",
-    "Head shots are fun. Get yourself one.",
-    "You should try swimming with great white sharks.",
-    "You should paint yourself red and run in a bull marathon.",
-    "You can stay underwater for the rest of your life without coming back up.",
-    "How about you stop breathing for like 1 day? That'll be great.",
-    "Try provoking a tiger while you both are in a cage.",
-    "Have you tried shooting yourself as high as 100m using a canon.",
-    "You should try holding TNT in your mouth and igniting it.",
+    "You should Volunteer for target in an firing range.",
     "Try playing catch and throw with RDX its fun.",
-    "I heard phogine is poisonous but i guess you wont mind inhaling it for fun.",
-    "Launch yourself into outer space while forgetting oxygen on Earth.",
-    "You should try playing snake and ladders, with real snakes and no ladders.",
-    "Dance naked on a couple of HT wires.",
-    "Active Volcano is the best swimming pool for you.",
-    "You should try hot bath in a volcano.",
-    "Try to spend one day in a coffin and it will be yours forever.",
-    "Hit Uranium with a slow moving neutron in your presence. It will be a worthwhile experience.",
-    "You can be the first person to step on sun. Have a try.",
+    "People like you are the reason we have middle fingers.",
+    "When your mom dropped you off at the school, she got a ticket for littering.",
+    "You’re so ugly that when you cry, the tears roll down the back of your head, just to avoid your face.",
+    "If you’re talking behind my back then you’re in a perfect position to kiss my a**!.",
 ]
 
 UWUS = [
@@ -366,21 +220,22 @@ FACEREACTS = [
 ]
 
 RUNSREACTS = [
-    "Runs to Thanos..",
-    "Runs far, far away from earth..",
-    "Running faster than Bolt coz i'mma userbot !!",
-    "Runs to Marie..",
+    "Runs to Thanos",
+    "Runs far, far away from earth",
+    "Running faster than usian bolt coz I'mma Bot",
+    "Runs to Marie",
     "This Group is too cancerous to deal with.",
     "Cya bois",
     "Kys",
+    "I am a mad person. Plox Ban me.",
     "I go away",
     "I am just walking off, coz me is too fat.",
     "I Fugged off!",
     "Will run for chocolate.",
     "I run because I really like food.",
-    "Running...\nbecause dieting is not an option.",
+    "Running...because dieting is not an option.",
     "Wicked fast runnah",
-    "If you wanna catch me, you got to be fast...\nIf you wanna stay with me, you got to be good...\nBut if you wanna pass me...\nYou've got to be kidding.",
+    "If you wanna catch me, you got to be fast...if you wanna stay with me, you got to be good...if you wanna pass me...You've got to be kidding.",
     "Anyone can run a hundred meters, it's the next forty-two thousand and two hundred that count.",
     "Why are all these people following me?",
     "Are the kids still chasing me?",
@@ -419,19 +274,26 @@ SHGS = [
     "┐(´д`)┌",
     "┐(´∀｀)┌",
     "ʅ(́◡◝)ʃ",
+    "ლ(ﾟдﾟლ)",
     "┐(ﾟ～ﾟ)┌",
     "┐('д')┌",
+    "ლ｜＾Д＾ლ｜",
+    "ლ（╹ε╹ლ）",
+    "ლ(ಠ益ಠ)ლ",
     "┐(‘～`;)┌",
     "ヘ(´－｀;)ヘ",
     "┐( -“-)┌",
+    "乁༼☯‿☯✿༽ㄏ",
     "ʅ（´◔౪◔）ʃ",
+    "ლ(•ω •ლ)",
     "ヽ(゜～゜o)ノ",
     "ヽ(~～~ )ノ",
     "┐(~ー~;)┌",
     "┐(-。ー;)┌",
-    r"¯\_(ツ)_/¯",
-    r"¯\_(⊙_ʖ⊙)_/¯",
-    r"¯\_༼ ಥ ‿ ಥ ༽_/¯",
+    "¯\_(ツ)_/¯",
+    "¯\_(⊙_ʖ⊙)_/¯",
+    "乁ʕ •̀ ۝ •́ ʔㄏ",
+    "¯\_༼ ಥ ‿ ಥ ༽_/¯",
     "乁( ⁰͡  Ĺ̯ ⁰͡ ) ㄏ",
 ]
 
@@ -479,17 +341,7 @@ SLAP_TEMPLATES = [
     "pins {victim} down and repeatedly {hits} them with a {item}.",
     "grabs up a {item} and {hits} {victim} with it.",
     "ties {victim} to a chair and {throws} a {item} at them.",
-    "gave a friendly push to help {victim} learn to swim in lava.",
-    "sent {victim} to /dev/null.", "sent {victim} down the memory hole.",
-    "beheaded {victim}.", "threw {victim} off a building.",
-    "replaced all of {victim}'s music with Nickelback.",
-    "spammed {victim}'s email.", "made {victim} a knuckle sandwich.",
-    "slapped {victim} with pure nothing.",
-    "hit {victim} with a small, interstellar spaceship.",
-    "quickscoped {victim}.", "put {victim} in check-mate.",
-    "RSA-encrypted {victim} and deleted the private key.",
-    "put {victim} in the friendzone.",
-    "slaps {victim} with a DMCA takedown request!"
+    "gave a friendly push to help {victim} learn to swim in lava."
 ]
 
 ITEMS = [
@@ -543,11 +395,9 @@ HIT = [
 
 
 @register(outgoing=True, pattern=r"^.(\w+)say (.*)")
-@errors_handler
 async def univsaye(cowmsg):
     """ For .cowsay module, userbot wrapper for cow which says things. """
-    if not cowmsg.text[0].isalpha() and cowmsg.text[0] not in ("/", "#", "@",
-                                                               "!"):
+    if not cowmsg.text[0].isalpha() and cowmsg.text[0] not in ("/", "#", "@", "!"):
         arg = cowmsg.pattern_match.group(1).lower()
         text = cowmsg.pattern_match.group(2)
 
@@ -562,20 +412,17 @@ async def univsaye(cowmsg):
 
 
 @register(outgoing=True, pattern="^:/$")
-@errors_handler
 async def kek(keks):
-    """ Check yourself ;)"""
-    uio = ["/", "\\"]
-    for i in range(1, 15):
-        time.sleep(0.3)
-        await keks.edit(":" + uio[i % 2])
-
+    if not keks.text[0].isalpha() and keks.text[0] not in ("/", "#", "@", "!"):
+        """ Check yourself ;)"""
+        uio = ["/", "\\"]
+        for i in range(1, 15):
+            time.sleep(0.3)
+            await keks.edit(":" + uio[i % 2])
 
 @register(outgoing=True, pattern=r"^.coinflip (.*)")
-@errors_handler
-async def coin(event):
-    if not event.text[0].isalpha() and event.text[0] not in ("/", "#", "@",
-                                                             "!"):
+async def _(event):
+    if not event.text[0].isalpha() and event.text[0] not in ("/", "#", "@", "!"):
         if event.fwd_from:
             return
         r = random.randint(1, 100)
@@ -584,33 +431,24 @@ async def coin(event):
             input_str = input_str.lower()
         if r % 2 == 1:
             if input_str == "heads":
-                await event.edit(
-                    "The coin landed on: **Heads**.\nYou were correct.")
+                await event.edit("The coin landed on: **Heads**.\nYou were correct.")
             elif input_str == "tails":
-                await event.edit(
-                    "The coin landed on: **Heads**.\nYou weren't correct, try again ..."
-                )
+                await event.edit("The coin landed on: **Heads**.\nYou weren't correct, try again ...")
             else:
                 await event.edit("The coin landed on: **Heads**.")
         elif r % 2 == 0:
             if input_str == "tails":
-                await event.edit(
-                    "The coin landed on: **Tails**.\nYou were correct.")
+                await event.edit("The coin landed on: **Tails**.\nYou were correct.")
             elif input_str == "heads":
-                await event.edit(
-                    "The coin landed on: **Tails**.\nYou weren't correct, try again ..."
-                )
+                await event.edit("The coin landed on: **Tails**.\nYou weren't correct, try again ...")
             else:
                 await event.edit("The coin landed on: **Tails**.")
         else:
             await event.edit("Gimme another coin, this one fake AF !!")
 
-
 @register(pattern="^.slap(?: |$)(.*)", outgoing=True)
-@errors_handler
 async def who(event):
-    if not event.text[0].isalpha() and event.text[0] not in ("/", "#", "@",
-                                                             "!"):
+    if not event.text[0].isalpha() and event.text[0] not in ("/", "#", "@", "!"):
         """ slaps a user, or get slapped if not a reply. """
         if event.fwd_from:
             return
@@ -625,18 +463,14 @@ async def who(event):
         try:
             await event.edit(caption)
 
-        except BaseException:
-            await event.edit(
-                "`Can't slap this person, need to fetch some sticks and stones !!`"
-            )
-
+        except:
+            await event.edit("`Can't slap this person, need to fetch some sticks and stones !!`")
 
 async def get_user(event):
     """ Get the user from argument or replied message. """
     if event.reply_to_msg_id:
         previous_message = await event.get_reply_message()
-        replied_user = await event.client(
-            GetFullUserRequest(previous_message.from_id))
+        replied_user = await event.client(GetFullUserRequest(previous_message.from_id))
     else:
         user = event.pattern_match.group(1)
 
@@ -650,22 +484,19 @@ async def get_user(event):
         if event.message.entities is not None:
             probable_user_mention_entity = event.message.entities[0]
 
-            if isinstance(probable_user_mention_entity,
-                          MessageEntityMentionName):
+            if isinstance(probable_user_mention_entity, MessageEntityMentionName):
                 user_id = probable_user_mention_entity.user_id
                 replied_user = await event.client(GetFullUserRequest(user_id))
                 return replied_user
         try:
             user_object = await event.client.get_entity(user)
-            replied_user = await event.client(
-                GetFullUserRequest(user_object.id))
+            replied_user = await event.client(GetFullUserRequest(user_object.id))
 
         except (TypeError, ValueError):
             await event.edit("`I don't slap aliens, they ugly AF !!`")
             return None
 
     return replied_user
-
 
 async def slap(replied_user, event):
     """ Construct a funny slap sentence !! """
@@ -683,83 +514,57 @@ async def slap(replied_user, event):
     hit = random.choice(HIT)
     throw = random.choice(THROW)
 
-    caption = "..." + temp.format(
-        victim=slapped, item=item, hits=hit, throws=throw)
+    caption = "..." + temp.format(victim=slapped, item=item, hits=hit, throws=throw)
 
     return caption
 
-
 @register(outgoing=True, pattern="^-_-$")
-@errors_handler
 async def lol(lel):
-    """ Ok... """
-    okay = "-_-"
-    for i in range(10):
-        okay = okay[:-1] + "_-"
-        await lel.edit(okay)
+    if not lel.text[0].isalpha() and lel.text[0] not in ("/", "#", "@", "!"):
+        """ Ok... """
+        okay = "-_-"
+        for _ in range(10):
+            okay = okay[:-1] + "_-"
+            await lel.edit(okay)
 
-
-@register(outgoing=True, pattern="^.decide(?: |$)(.*)")
-@errors_handler
-async def decide(event):
-    if not event.text[0].isalpha() and event.text[0] not in ("/", "#", "@",
-                                                             "!"):
+@register(outgoing=True, pattern="^.decide$")
+async def _(event):
+    if not event.text[0].isalpha() and event.text[0] not in ("/", "#", "@", "!"):
         if event.fwd_from:
             return
-        message = event.pattern_match.group(1)
-        message_id = None
+        message_id = event.message.id
         if event.reply_to_msg_id:
             message_id = event.reply_to_msg_id
-        if not message:
-            r = requests.get("https://yesno.wtf/api").json()
-        else:
-            try:
-                r = requests.get(
-                    f"https://yesno.wtf/api?force={message.lower()}").json()
-            except BaseException:
-                await event.edit("`Available decisions:` *yes*, *no*, *maybe*")
-                return
-        await event.client.send_message(event.chat_id,
-                                        str(r["answer"]).upper(),
-                                        reply_to=message_id,
-                                        file=r["image"])
+        r = requests.get("https://yesno.wtf/api").json()
+        await event.client.send_message(
+            event.chat_id,
+            str(r["answer"]).upper(),
+            reply_to=message_id,
+            file=r["image"]
+        )
         await event.delete()
 
-
 @register(outgoing=True, pattern="^;_;$")
-@errors_handler
 async def fun(e):
-    t = ";__;"
-    for j in range(10):
-        t = t[:-1] + "_;"
-        await e.edit(t)
-
-
-@register(outgoing=True, pattern="^.fp$")
-@errors_handler
-async def facepalm(e):
     if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
-        await e.edit("🤦‍♂")
-
+        t = ";__;"
+        for j in range(10):
+            t = t[:-1] + "_;"
+            await e.edit(t)
 
 @register(outgoing=True, pattern="^.cry$")
-@errors_handler
 async def cry(e):
     """ y u du dis, i cry everytime !! """
     if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
         await e.edit(random.choice(CRI))
 
-
 @register(outgoing=True, pattern="^.insult$")
-@errors_handler
 async def insult(e):
     """ I make you cry !! """
     if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
         await e.edit(random.choice(INSULT_STRINGS))
 
-
 @register(outgoing=True, pattern="^.cp(?: |$)(.*)")
-@errors_handler
 async def copypasta(cp_e):
     """ Copypasta the famous meme """
     if not cp_e.text[0].isalpha() and cp_e.text[0] not in ("/", "#", "@", "!"):
@@ -775,8 +580,9 @@ async def copypasta(cp_e):
             return
 
         reply_text = random.choice(EMOJIS)
-        # choose a random character in the message to be substituted with 🅱️
-        b_char = random.choice(message).lower()
+        b_char = random.choice(
+            message
+        ).lower()  # choose a random character in the message to be substituted with 🅱️
         for owo in message:
             if owo == " ":
                 reply_text += random.choice(EMOJIS)
@@ -795,7 +601,6 @@ async def copypasta(cp_e):
 
 
 @register(outgoing=True, pattern="^.vapor(?: |$)(.*)")
-@errors_handler
 async def vapor(vpr):
     """ Vaporize everything! """
     if not vpr.text[0].isalpha() and vpr.text[0] not in ("/", "#", "@", "!"):
@@ -822,11 +627,9 @@ async def vapor(vpr):
 
 
 @register(outgoing=True, pattern="^.str(?: |$)(.*)")
-@errors_handler
 async def stretch(stret):
     """ Stretch it."""
-    if not stret.text[0].isalpha() and stret.text[0] not in ("/", "#", "@",
-                                                             "!"):
+    if not stret.text[0].isalpha() and stret.text[0] not in ("/", "#", "@", "!"):
         textx = await stret.get_reply_message()
         message = stret.text
         message = stret.pattern_match.group(1)
@@ -839,13 +642,15 @@ async def stretch(stret):
             return
 
         count = random.randint(3, 10)
-        reply_text = re.sub(r"([aeiouAEIOUａｅｉｏｕＡＥＩＯＵаеиоуюяыэё])",
-                            (r"\1" * count), message)
+        reply_text = re.sub(
+            r"([aeiouAEIOUａｅｉｏｕＡＥＩＯＵаеиоуюяыэё])",
+            (r"\1"*count),
+            message
+        )
         await stret.edit(reply_text)
 
 
 @register(outgoing=True, pattern="^.zal(?: |$)(.*)")
-@errors_handler
 async def zal(zgfy):
     """ Invoke the feeling of chaos. """
     if not zgfy.text[0].isalpha() and zgfy.text[0] not in ("/", "#", "@", "!"):
@@ -886,16 +691,13 @@ async def zal(zgfy):
 
 
 @register(outgoing=True, pattern="^.hi$")
-@errors_handler
 async def hoi(hello):
     """ Greet everyone! """
-    if not hello.text[0].isalpha() and hello.text[0] not in ("/", "#", "@",
-                                                             "!"):
+    if not hello.text[0].isalpha() and hello.text[0] not in ("/", "#", "@", "!"):
         await hello.edit(random.choice(HELLOSTR))
 
 
 @register(outgoing=True, pattern="^.owo(?: |$)(.*)")
-@errors_handler
 async def faces(owo):
     """ UwU """
     if not owo.text[0].isalpha() and owo.text[0] not in ("/", "#", "@", "!"):
@@ -920,16 +722,13 @@ async def faces(owo):
 
 
 @register(outgoing=True, pattern="^.react$")
-@errors_handler
 async def react_meme(react):
     """ Make your userbot react to everything. """
-    if not react.text[0].isalpha() and react.text[0] not in ("/", "#", "@",
-                                                             "!"):
+    if not react.text[0].isalpha() and react.text[0] not in ("/", "#", "@", "!"):
         await react.edit(random.choice(FACEREACTS))
 
 
 @register(outgoing=True, pattern="^.shg$")
-@errors_handler
 async def shrugger(shg):
     r""" ¯\_(ツ)_/¯ """
     if not shg.text[0].isalpha() and shg.text[0] not in ("/", "#", "@", "!"):
@@ -937,7 +736,6 @@ async def shrugger(shg):
 
 
 @register(outgoing=True, pattern="^.runs$")
-@errors_handler
 async def runner_lol(run):
     """ Run, run, RUNNN! """
     if not run.text[0].isalpha() and run.text[0] not in ("/", "#", "@", "!"):
@@ -945,66 +743,47 @@ async def runner_lol(run):
 
 
 @register(outgoing=True, pattern="^.metoo$")
-@errors_handler
 async def metoo(hahayes):
     """ Haha yes """
-    if not hahayes.text[0].isalpha() and hahayes.text[0] not in ("/", "#", "@",
-                                                                 "!"):
+    if not hahayes.text[0].isalpha() and hahayes.text[0] not in ("/", "#", "@", "!"):
         await hahayes.edit(random.choice(METOOSTR))
 
-
-@register(outgoing=True, pattern="^Oof$")
-@errors_handler
+@register(outgoing=True, pattern="^.oof$")
 async def Oof(e):
-    t = "Oof"
-    for j in range(15):
-        t = t[:-1] + "of"
-        await e.edit(t)
-
+    if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
+        t = "Oof"
+        for j in range(15):
+            t = t[:-1] + "of"
+            await e.edit(t)
 
 @register(outgoing=True, pattern="^.10iq$")
-@errors_handler
 async def iqless(e):
     if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
         await e.edit("♿")
 
-
 @register(outgoing=True, pattern="^.moon$")
-@errors_handler
 async def _(event):
-    if not event.text[0].isalpha() and event.text[0] not in ("/", "#", "@",
-                                                             "!"):
-        if event.fwd_from:
-            return
-        deq = deque(list("🌗🌘🌑🌒🌓🌔🌕🌖"))
-        try:
-            for _ in range(32):
-                await asyncio.sleep(0.1)
-                await event.edit("".join(deq))
-                deq.rotate(1)
-        except BaseException:
-            return
-
+    if not event.text[0].isalpha() and event.text[0] not in ("/", "#", "@", "!"):
+	    if event.fwd_from:
+		    return
+	    deq = deque(list("🌗🌘🌑🌒🌓🌔🌕🌖"))
+	    for _ in range(32):
+		    await asyncio.sleep(0.1)
+		    await event.edit("".join(deq))
+		    deq.rotate(1)
 
 @register(outgoing=True, pattern="^.clock$")
-@errors_handler
 async def _(event):
-    if not event.text[0].isalpha() and event.text[0] not in ("/", "#", "@",
-                                                             "!"):
-        if event.fwd_from:
-            return
-        deq = deque(list("🕙🕘🕗🕖🕕🕔🕓🕒🕑🕐🕛"))
-        try:
-            for _ in range(32):
-                await asyncio.sleep(0.1)
-                await event.edit("".join(deq))
-                deq.rotate(1)
-        except BaseException:
-            return
-
+    if not event.text[0].isalpha() and event.text[0] not in ("/", "#", "@", "!"):
+	    if event.fwd_from:
+		    return
+	    deq = deque(list("🕙🕘🕗🕖🕕🕔🕓🕒🕑🕐🕛"))
+	    for _ in range(32):
+		    await asyncio.sleep(0.1)
+		    await event.edit("".join(deq))
+		    deq.rotate(1)
 
 @register(outgoing=True, pattern="^.mock(?: |$)(.*)")
-@errors_handler
 async def spongemocktext(mock):
     """ Do it and find the real fun. """
     if not mock.text[0].isalpha() and mock.text[0] not in ("/", "#", "@", "!"):
@@ -1030,11 +809,9 @@ async def spongemocktext(mock):
 
 
 @register(outgoing=True, pattern="^.clap(?: |$)(.*)")
-@errors_handler
 async def claptext(memereview):
     """ Praise people! """
-    if not memereview.text[0].isalpha() and memereview.text[0] not in (
-            "/", "#", "@", "!"):
+    if not memereview.text[0].isalpha() and memereview.text[0] not in ("/", "#", "@", "!"):
         textx = await memereview.get_reply_message()
         message = memereview.pattern_match.group(1)
         if message:
@@ -1049,40 +826,51 @@ async def claptext(memereview):
         reply_text += " 👏"
         await memereview.edit(reply_text)
 
-
 @register(outgoing=True, pattern="^.bt$")
-@errors_handler
 async def bluetext(bt_e):
     """ Believe me, you will find this useful. """
     if not bt_e.text[0].isalpha() and bt_e.text[0] not in ("/", "#", "@", "!"):
         if await bt_e.get_reply_message():
             await bt_e.edit(
-                "/BLUETEXT /MUST /CLICK.\n"
-                "/ARE /YOU /A /STUPID /ANIMAL /WHICH /IS /ATTRACTED /TO /COLOURS ?"
+                "`BLUETEXT MUST CLICK.`\n"
+                "`Are you a stupid animal which is attracted to colours?`"
             )
 
 
-@register(outgoing=True, pattern=r"^.f (.*)")
-@errors_handler
+@register(outgoing=True, pattern="^.smk (.*)")
+async def smrk(smk):
+        if not smk.text[0].isalpha() and smk.text[0] not in ("/", "#", "@", "!"):
+            textx = await smk.get_reply_message()
+            message = smk.text
+        if message[5:]:
+            message = str(message[5:])
+        elif textx:
+            message = textx
+            message = str(message.message)
+        if message == 'dele':
+            await smk.edit( message +'te the hell' + "ツ" )
+            await smk.edit("ツ")
+        else:
+             smirk = " ツ"
+             reply_text = message + smirk
+             await smk.edit(reply_text)
+
+
+@register(outgoing=True, pattern=r"\.f (.*)")
 async def payf(e):
     if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
         paytext = e.pattern_match.group(1)
-        pay = "{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}".format(
-            paytext * 8, paytext * 8, paytext * 2, paytext * 2, paytext * 2,
-            paytext * 6, paytext * 6, paytext * 2, paytext * 2, paytext * 2,
-            paytext * 2, paytext * 2)
+        pay = "{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}".format(paytext*8, paytext*8, paytext*2, paytext*2, paytext*2, paytext*6, paytext*6, paytext*2, paytext*2, paytext*2, paytext*2, paytext*2)
         await e.edit(pay)
 
 
-@register(outgoing=True, pattern="^.lfy (.*)")
-@errors_handler
+@register(outgoing=True, pattern="^.lfy (.*)",)
 async def let_me_google_that_for_you(lmgtfy_q):
-    if not lmgtfy_q.text[0].isalpha() and lmgtfy_q.text[0] not in ("/", "#",
-                                                                   "@", "!"):
+    if not lmgtfy_q.text[0].isalpha() and lmgtfy_q.text[0] not in ("/", "#", "@", "!"):
         textx = await lmgtfy_q.get_reply_message()
-        qry = lmgtfy_q.pattern_match.group(1)
-        if qry:
-            query = str(qry)
+        query = lmgtfy_q.text
+        if query[5:]:
+            query = str(query[5:])
         elif textx:
             query = textx
             query = query.message
@@ -1091,51 +879,16 @@ async def let_me_google_that_for_you(lmgtfy_q):
         payload = {'format': 'json', 'url': lfy_url}
         r = requests.get('http://is.gd/create.php', params=payload)
         await lmgtfy_q.edit(f"[{query}]({r.json()['shorturl']})")
+        if BOTLOG:
+            await bot.send_message(
+                BOTLOG_CHATID,
+                "LMGTFY query `" + query + "` was executed successfully",
+            )
 
-
-@register(pattern=r".scam(?: |$)(.*)", outgoing=True)
-@errors_handler
-async def scam(event):
-    """ Just a small command to fake chat actions for fun !! """
-    if not event.text[0].isalpha() and event.text[0] not in ("/", "#", "@",
-                                                             "!"):
-        options = [
-            'typing', 'contact', 'game', 'location', 'voice', 'round', 'video',
-            'photo', 'document', 'cancel'
-        ]
-        input_str = event.pattern_match.group(1)
-        args = input_str.split()
-        if len(args) is 0:  # Let bot decide action and time
-            scam_action = random.choice(options)
-            scam_time = random.randint(30, 60)
-        elif len(args) is 1:  # User decides time/action
-            try:
-                scam_action = str(args[0]).lower()
-                scam_time = random.randint(30, 60)
-            except ValueError:
-                scam_action = random.choice(options)
-                scam_time = int(args[0])
-        elif len(args) is 2:  # User decides both action and time
-            scam_action = str(args[0]).lower()
-            scam_time = int(args[1])
-        else:
-            await event.edit("`Invalid Syntax !!`")
-            return
-        try:
-            if (scam_time > 0):
-                await event.delete()
-                async with event.client.action(event.chat_id, scam_action):
-                    await asyncio.sleep(scam_time)
-        except BaseException:
-            return
-
-
-@register(pattern=r".type(?: |$)(.*)", outgoing=True)
-@errors_handler
+@register(pattern='.type(?: |$)(.*)')
 async def typewriter(typew):
     """ Just a small command to make your keyboard become a typewriter! """
-    if not typew.text[0].isalpha() and typew.text[0] not in ("/", "#", "@",
-                                                             "!"):
+    if not typew.text[0].isalpha() and typew.text[0] not in ("/", "#", "@", "!"):
         textx = await typew.get_reply_message()
         message = typew.pattern_match.group(1)
         if message:
@@ -1146,8 +899,8 @@ async def typewriter(typew):
             await typew.edit("`Give a text to type!`")
             return
         sleep_time = 0.03
-        typing_symbol = "█"
-        old_text = ""
+        typing_symbol = "|"
+        old_text = ''
         await typew.edit(typing_symbol)
         await asyncio.sleep(sleep_time)
         for character in message:
@@ -1158,10 +911,8 @@ async def typewriter(typew):
             await typew.edit(old_text)
             await asyncio.sleep(sleep_time)
 
-
 CMD_HELP.update({
-    "memes":
-    ".cowsay\
+    "memes": ".cowsay\
 \nUsage: cow which says things.\
 \n\n:/\
 \nUsage: Check yourself ;)\
@@ -1179,10 +930,8 @@ CMD_HELP.update({
 \nUsage: You retard !!\
 \n\n.zal\
 \nUsage: Invoke the feeling of chaos.\
-\n\nOof\
+\n\n.oof\
 \nUsage: Ooooof\
-\n\n.fp\
-\nUsage: Facepalm :P\
 \n\n.moon\
 \nUsage: kensar moon animation.\
 \n\n.clock\
@@ -1202,7 +951,7 @@ CMD_HELP.update({
 \n\n.shg\
 \nUsage: Shrug at it !!\
 \n\n.runs\
-\nUsage: Run, run, RUNNN!\
+\nUsage: Run, run, RUNNN! [`.disable runs`: disable | `.enable runs`: enable]\
 \n\n.metoo\
 \nUsage: Haha yes\
 \n\n.mock\
@@ -1213,14 +962,13 @@ CMD_HELP.update({
 \nUsage: Pay Respects.\
 \n\n.bt\
 \nUsage: Believe me, you will find this useful.\
+\n\n.smk <text/reply>\
+\nUsage: A shit module for ツ , who cares.\
 \n\n.type\
 \nUsage: Just a small command to make your keyboard become a typewriter!\
 \n\n.lfy <query>\
 \nUsage: Let me Google that for you real quick !!\
-\n\n.decide [Optional: (yes, no, maybe)]\
+\n\n.decide\
 \nUsage: Make a quick decision.\
-\n\n.scam <action> <time>\
-\n[Available Actions: (typing, contact, game, location, voice, round, video, photo, document, cancel)]\
-\nUsage: Create fake chat actions, for fun. (Default action: typing)\
 \n\n\nThanks to 🅱️ottom🅱️ext🅱️ot (@NotAMemeBot) for some of these."
 })
