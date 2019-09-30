@@ -228,9 +228,9 @@ def youtube_search(query,
 # Thanks to @kandnub for parts of this code.
 # Do check out his cool userbot at
 # https://github.com/kandnub/TG-UserBot
-@register(outgoing=True, pattern=r".rip?(m|v) (.*)")
+@register(outgoing=True, pattern=r".rip(audio|video) (.*)")
 async def download_video(v_url):
-    """ For .rip command, download media from YouTube + 800 other sites. """
+    """ For .rip command, download media from YouTube and many other sites. """
     url = v_url.pattern_match.group(2)
     type = v_url.pattern_match.group(1).lower()
 
@@ -240,6 +240,8 @@ async def download_video(v_url):
         opts = {
             'format':
             'bestaudio',
+            'addmetadata':
+            True,
             'key':
             'FFmpegMetadata',
             'writethumbnail':
@@ -269,6 +271,8 @@ async def download_video(v_url):
         opts = {
             'format':
             'best',
+            'addmetadata':
+            True,
             'key':
             'FFmpegMetadata',
             'prefer_ffmpeg':
@@ -292,7 +296,7 @@ async def download_video(v_url):
         video = True
 
     try:
-        await v_url.edit("`Downloading...`")
+        await v_url.edit("`Fetching data, please wait..`")
         with YoutubeDL(opts) as rip:
             rip_data = rip.extract_info(url)
     except DownloadError as DE:
@@ -324,9 +328,11 @@ async def download_video(v_url):
     except Exception as e:
         await v_url.edit(f"{str(type(e)): {str(e)}}")
         return
-    await v_url.edit(f"`Uploading...`")
     c_time = time.time()
     if song:
+        await v_url.edit(f"`Preparing to upload song:`\
+        \n**{rip_data['title']}**\
+        \nby *{rip_data['uploader']}*")
         await v_url.client.send_file(
             v_url.chat_id,
             f"{rip_data['id']}.mp3",
@@ -343,6 +349,9 @@ async def download_video(v_url):
         os.remove(f"{rip_data['id']}.mp3")
         await v_url.delete()
     elif video:
+        await v_url.edit(f"`Preparing to upload video:`\
+        \n**{rip_data['title']}**\
+        \nby *{rip_data['uploader']}*")
         await v_url.client.send_file(
             v_url.chat_id,
             f"{rip_data['id']}.mp4",
@@ -668,6 +677,6 @@ CMD_HELP.update({
 })
 CMD_HELP.update({
     'rip':
-    '.ripm <url> or ripv <url>\
+    '.ripaudio <url> or ripvideo <url>\
         \nUsage: Download videos and songs from YouTube (and [many other sites](https://ytdl-org.github.io/youtube-dl/supportedsites.html)).'
 })
