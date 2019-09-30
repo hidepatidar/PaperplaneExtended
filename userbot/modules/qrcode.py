@@ -96,12 +96,12 @@ async def make_qr(makeqr):
         qr = qrcode.QRCode(
             version=1,
             error_correction=qrcode.constants.ERROR_CORRECT_L,
-            box_size=10,
-            border=4,
+            box_size=1,
+            border=1,
         )
         qr.add_data(message)
         qr.make(fit=True)
-        img = qr.make_image(fill_color="black", back_color="white")
+        img = qr.make_image(fill_color="black", back_color="silver")
         img.save("img_file.webp", "PNG")
         await makeqr.client.send_file(
             makeqr.chat_id,

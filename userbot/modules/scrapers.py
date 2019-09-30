@@ -30,8 +30,11 @@ from googleapiclient.errors import HttpError
 from googletrans import LANGUAGES, Translator
 from gtts import gTTS
 from emoji import get_emoji_regexp
-import youtube_dl
-
+from youtube_dl import YoutubeDL
+from youtube_dl.utils import (DownloadError, ContentTooShortError,
+                              ExtractorError, GeoRestrictedError,
+                              MaxDownloadsReached, PostProcessingError,
+                              UnavailableVideoError, XAttrMetadataError)
 from userbot import CMD_HELP, BOTLOG, BOTLOG_CHATID, YOUTUBE_API_KEY, CHROME_DRIVER, GOOGLE_CHROME_BIN
 from userbot.events import register
 
@@ -225,67 +228,132 @@ def youtube_search(query,
 # Thanks to @kandnub for parts of this code.
 # Do check out his cool userbot at
 # https://github.com/kandnub/TG-UserBot
-@register(outgoing=True, pattern=r".rip (\S*) ?(\S*)")
+@register(outgoing=True, pattern=r".rip?(m|v) (.*)")
 async def download_video(v_url):
     """ For .rip command, download media from YouTube + 800 other sites. """
-    if not v_url.text[0].isalpha() and v_url.text[0] not in ("/", "#", "@",
-                                                             "!"):
-        url = v_url.pattern_match.group(1)
-        type = v_url.pattern_match.group(2).lower()
+    url = v_url.pattern_match.group(2)
+    type = v_url.pattern_match.group(1).lower()
 
-        await v_url.edit("**Preparing to download..**")
+    await v_url.edit("`Preparing to download...`")
 
-        if type.lower() in ['aac', 'flac', 'mp3', 'm4a', 'opus', 'vorbis', 'wav']:
-            opts = {
-                'format': 'bestaudio',
-                'prefer_ffmpeg': True,
-                'geo_bypass': True,
-                'nocheckcertificate': True,
-                'postprocessors': [{
-                    'key': 'FFmpegExtractAudio',
-                    'preferredcodec': type,
-                    'preferredquality': '320',
-                }],
-                'outtmpl': '%(title)s.%(ext)s',
-                'quiet': True,
-                'logtostderr': False
-            }
+    if type == "audio":
+        opts = {
+            'format':
+            'bestaudio',
+            'key':
+            'FFmpegMetadata',
+            'writethumbnail':
+            True,
+            'prefer_ffmpeg':
+            True,
+            'geo_bypass':
+            True,
+            'nocheckcertificate':
+            True,
+            'postprocessors': [{
+                'key': 'FFmpegExtractAudio',
+                'preferredcodec': 'mp3',
+                'preferredquality': '320',
+            }],
+            'outtmpl':
+            '%(id)s.mp3',
+            'quiet':
+            True,
+            'logtostderr':
+            False
+        }
+        video = False
+        song = True
 
-        elif type.lower() in ['mp4', 'flv', 'ogg', 'webm', 'mkv', 'avi']:
-            opts = {
-                'format': 'bestvideo+bestaudio',
-                'prefer_ffmpeg': True,
-                'geo_bypass': True,
-                'nocheckcertificate': True,
-                'postprocessors': [{
-                    'key': 'FFmpegVideoConvertor',
-                    'preferedformat': type
-                }],
-                'outtmpl': '%(title)s.%(ext)s',
-                'logtostderr': False,
-                'quiet': True
-            }
+    elif type == "video":
+        opts = {
+            'format':
+            'best',
+            'key':
+            'FFmpegMetadata',
+            'prefer_ffmpeg':
+            True,
+            'geo_bypass':
+            True,
+            'nocheckcertificate':
+            True,
+            'postprocessors': [{
+                'key': 'FFmpegVideoConvertor',
+                'preferedformat': 'mp4'
+            }],
+            'outtmpl':
+            '%(id)s.mp4',
+            'logtostderr':
+            False,
+            'quiet':
+            True
+        }
+        song = False
+        video = True
 
-        else:
-            opts = {
-                'format': 'best',
-                'key': 'FFmpegMetadata',
-                'prefer_ffmpeg': True,
-                'geo_bypass': True,
-                'nocheckcertificate': True,
-                'outtmpl': '%(title)s.%(ext)s',
-                'logtostderr': False,
-                'quiet': True
-            }
-
-        try:
-            await v_url.edit("**Downloading...**")
-            with youtube_dl.YoutubeDL(opts) as rip:
-                rip.download([url])
-            await v_url.edit(f"Downloaded succesfully !!")
-        except Exception as err:
-            await v_url.edit(f"Error: {str(err)}")
-            return
+    try:
+        await v_url.edit("`Downloading...`")
+        with YoutubeDL(opts) as rip:
+            rip_data = rip.extract_info(url)
+    except DownloadError as DE:
+        await v_url.edit(f"`{str(DE)}`")
+        return
+    except ContentTooShortError:
+        await v_url.edit("`The download content was too short.`")
+        return
+    except GeoRestrictedError:
+        await v_url.edit(
+            "`Video is not available from your geographic location due to geographic restrictions imposed by a website.`"
+        )
+        return
+    except MaxDownloadsReached:
+        await v_url.edit("`Max-downloads limit has been reached.`")
+        return
+    except PostProcessingError:
+        await v_url.edit("`There was an error during post processing.`")
+        return
+    except UnavailableVideoError:
+        await v_url.edit("`Media is not available in the requested format.`")
+        return
+    except XAttrMetadataError as XAME:
+        await v_url.edit(f"`{XAME.code}: {XAME.msg}\n{XAME.reason}`")
+        return
+    except ExtractorError:
+        await v_url.edit("`There was an error during info extraction.`")
+        return
+    except Exception as e:
+        await v_url.edit(f"{str(type(e)): {str(e)}}")
+        return
+    await v_url.edit(f"`Uploading...`")
+    c_time = time.time()
+    if song:
+        await v_url.client.send_file(
+            v_url.chat_id,
+            f"{rip_data['id']}.mp3",
+            supports_streaming=True,
+            attributes=[
+                DocumentAttributeAudio(duration=int(rip_data['duration']),
+                                       title=str(rip_data['title']),
+                                       performer=str(rip_data['uploader']))
+            ],
+            progress_callback=lambda d, t: asyncio.get_event_loop(
+            ).create_task(
+                progress(d, t, v_url, c_time, "Uploading..",
+                         f"{rip_data['title']}.mp3")))
+        os.remove(f"{rip_data['id']}.mp3")
+        await v_url.delete()
+    elif video:
+        await v_url.client.send_file(
+            v_url.chat_id,
+            f"{rip_data['id']}.mp4",
+            supports_streaming=True,
+            caption=rip_data['title'],
+            progress_callback=lambda d, t: asyncio.get_event_loop(
+            ).create_task(
+                progress(d, t, v_url, c_time, "Uploading..",
+                         f"{rip_data['title']}.mp4")))
+        os.remove(f"{rip_data['id']}.mp4")
+        await v_url.delete()
 
         
 
@@ -523,6 +591,43 @@ async def lang(value):
                 BOTLOG_CHATID, "Default language changed to **" + LANG + "**"
             )
             await value.edit("Default language changed to **" + LANG + "**")
+                  
+                  
+                  
+@register(outgoing=True, pattern=r"^.wiki (.*)")
+async def wiki(wiki_q):
+    """ For .google command, fetch content from Wikipedia. """
+    if not wiki_q.text[0].isalpha() and wiki_q.text[0] not in ("/", "#", "@",
+                                                               "!"):
+        match = wiki_q.pattern_match.group(1)
+        try:
+            summary(match)
+        except DisambiguationError as error:
+            await wiki_q.edit(f"Disambiguated page found.\n\n{error}")
+            return
+        except PageError as pageerror:
+            await wiki_q.edit(f"Page not found.\n\n{pageerror}")
+            return
+        result = summary(match)
+        if len(result) >= 4096:
+            file = open("output.txt", "w+")
+            file.write(result)
+            file.close()
+            await wiki_q.client.send_file(
+                wiki_q.chat_id,
+                "output.txt",
+                reply_to=wiki_q.id,
+                caption="`Output too large, sending as file`",
+            )
+            if os.path.exists("output.txt"):
+                os.remove("output.txt")
+            return
+        await wiki_q.edit("**Search:**\n`" + match + "`\n\n**Result:**\n" +
+                          result)
+        if BOTLOG:
+            await wiki_q.client.send_message(
+                BOTLOG_CHATID,
+                f"Wiki query `{match}` was executed successfully")
 
 
 
@@ -563,6 +668,6 @@ CMD_HELP.update({
 })
 CMD_HELP.update({
     'rip':
-    '.rip <url>\
-        \nUsage: Download videos from YouTube (and many other sites). If no quality is specified, the highest downloadable quality is downloaded.'
+    '.ripm <url> or ripv <url>\
+        \nUsage: Download videos and songs from YouTube (and [many other sites](https://ytdl-org.github.io/youtube-dl/supportedsites.html)).'
 })
